@@ -3328,6 +3328,303 @@
             return promicro;
         }
 
+        var promicro_rp2040;
+        var hasRequiredPromicro_rp2040;
+
+        function requirePromicro_rp2040() {
+            if (hasRequiredPromicro_rp2040) return promicro_rp2040;
+            hasRequiredPromicro_rp2040 = 1;
+            // Arduino ProMicro atmega32u4au
+            // Params
+            //  orientation: default is down
+            //    if down, power led will face the pcb
+            //    if up, power led will face away from pcb
+
+            promicro_rp2040 = {
+                params: {
+                    designator: "MCU",
+                    orientation: "down",
+                    GP11: { type: "net", value: "GP11" },
+                    RAW: { type: "net", value: "RAW" },
+                    GND: { type: "net", value: "GND" },
+                    RST: { type: "net", value: "RST" },
+                    VCC: { type: "net", value: "VCC" },
+                    GP29: { type: "net", value: "GP29" },
+                    GP28: { type: "net", value: "GP28" },
+                    GP27: { type: "net", value: "GP27" },
+                    GP26: { type: "net", value: "GP26" },
+                    GP25: { type: "net", value: "GP25" },
+                    GP22: { type: "net", value: "GP22" },
+                    GP20: { type: "net", value: "GP20" },
+                    GP23: { type: "net", value: "GP23" },
+                    GP21: { type: "net", value: "GP21" },
+                    GP16: { type: "net", value: "GP16" },
+                    GP15: { type: "net", value: "GP15" },
+                    GP14: { type: "net", value: "GP14" },
+                    GP13: { type: "net", value: "GP13" },
+                    GP12: { type: "net", value: "GP12" },
+                    GP9: { type: "net", value: "GP9" },
+                    GP8: { type: "net", value: "GP8" },
+                    GP7: { type: "net", value: "GP7" },
+                    GP6: { type: "net", value: "GP6" },
+                    GP5: { type: "net", value: "GP5" },
+                    GP4: { type: "net", value: "GP4" },
+                    GP3: { type: "net", value: "GP3" },
+                    GP2: { type: "net", value: "GP2" },
+                    GP1: { type: "net", value: "GP1" },
+                    GP0: { type: "net", value: "GP0" },
+                    GP10: { type: "net", value: "GP10" }
+                },
+                body: (p) => {
+                    const standard = `
+      (module ProMicro_rp2040 (layer F.Cu) (tedit 5B307E4C)
+      ${p.at /* parametric position */}
+
+      ${"" /* footprint reference */}
+      (fp_text reference "${p.ref}" (at 0 0) (layer F.SilkS) ${
+                        p.ref_hide
+                    } (effects (font (size 1.27 1.27) (thickness 0.15))))
+      (fp_text value "" (at 0 0) (layer F.SilkS) hide (effects (font (size 1.27 1.27) (thickness 0.15))))
+    
+      ${"" /* illustration of the (possible) USB port overhang */}
+      (fp_line (start -19.304 -3.81) (end -14.224 -3.81) (layer Dwgs.User) (width 0.15))
+      (fp_line (start -19.304 3.81) (end -19.304 -3.81) (layer Dwgs.User) (width 0.15))
+      (fp_line (start -14.224 3.81) (end -19.304 3.81) (layer Dwgs.User) (width 0.15))
+      (fp_line (start -14.224 -3.81) (end -14.224 3.81) (layer Dwgs.User) (width 0.15))
+    
+      ${"" /* component outline */}
+      (fp_line (start -17.78 8.89) (end 15.24 8.89) (layer F.SilkS) (width 0.15))
+      (fp_line (start 15.24 8.89) (end 15.24 -8.89) (layer F.SilkS) (width 0.15))
+      (fp_line (start 15.24 -8.89) (end -17.78 -8.89) (layer F.SilkS) (width 0.15))
+      (fp_line (start -17.78 -8.89) (end -17.78 8.89) (layer F.SilkS) (width 0.15))
+      `;
+                    function pins(def_neg, def_pos) {
+                        return `
+        ${
+            "" /* extra border around "RAW", in case the rectangular shape is not distinctive enough */
+        }
+        (fp_line (start -15.24 ${def_pos}6.35) (end -12.7 ${def_pos}6.35) (layer F.SilkS) (width 0.15))
+        (fp_line (start -15.24 ${def_pos}6.35) (end -15.24 ${def_pos}8.89) (layer F.SilkS) (width 0.15))
+        (fp_line (start -12.7 ${def_pos}6.35) (end -12.7 ${def_pos}8.89) (layer F.SilkS) (width 0.15))
+		
+              ${"" /* pin names */}
+		(fp_text user GP11 (at -16.51 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user RAW (at -13.97 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GND (at -11.43 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user RST (at -8.89 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user VCC (at -6.35 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP29 (at -3.81 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP28 (at -1.27 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP27 (at 1.27 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP26 (at 3.81 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP22 (at 6.35 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP20 (at 8.89 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP23 (at 11.43 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP21 (at 13.97 ${def_pos}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+      
+	  
+		(fp_text user GP16 (at 17 ${def_pos}5.08 ${
+                            p.rot
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+		(fp_text user GP15 (at 17 ${def_pos}2.54 ${
+                            p.rot
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+		(fp_text user GP14 (at 17 ${def_pos}0 ${
+                            p.rot
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+		(fp_text user GP13 (at 17 ${def_neg}2.54 ${
+                            p.rot
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+		(fp_text user GP12 (at 17 ${def_neg}5.08 ${
+                            p.rot
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+	  
+	  
+	  
+        (fp_text user GP9 (at 13.97 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP8 (at 11.43 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP7 (at 8.89 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP6 (at 6.35 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP5 (at 3.81 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP4 (at 1.27 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP3 (at -1.27 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP2 (at -3.81 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GND (at -6.35 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GND (at -8.89 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP1 (at -11.43 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP0 (at -13.97 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+        (fp_text user GP10 (at -16.51 ${def_neg}10.8 ${
+                            p.rot + 90
+                        }) (layer F.SilkS) (effects (font (size 0.8 0.8) (thickness 0.15))))
+						
+        ${"" /* and now the actual pins */}
+		(pad 1 thru_hole circle (at -16.51 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP11.str
+                        })
+        (pad 2 thru_hole rect (at -13.97 ${def_pos}7.62 ${
+                            p.rot
+                        }) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.RAW.str
+                        })
+        (pad 3 thru_hole circle (at -11.43 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GND.str
+                        })
+        (pad 4 thru_hole circle (at -8.89 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.RST.str
+                        })
+        (pad 5 thru_hole circle (at -6.35 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.VCC.str
+                        })
+        (pad 6 thru_hole circle (at -3.81 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP29.str
+                        })
+        (pad 7 thru_hole circle (at -1.27 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP28.str
+                        })
+        (pad 8 thru_hole circle (at 1.27 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP27.str
+                        })
+        (pad 9 thru_hole circle (at 3.81 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP26.str
+                        })
+        (pad 10 thru_hole circle (at 6.35 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP22.str
+                        })
+        (pad 11 thru_hole circle (at 8.89 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP20.str
+                        })
+        (pad 12 thru_hole circle (at 11.43 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP23.str
+                        })
+        (pad 13 thru_hole circle (at 13.97 ${def_pos}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP21.str
+                        })
+						
+						
+        (pad 14 thru_hole circle (at 13.97 ${def_pos}5.08 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP16.str
+                        })
+        (pad 15 thru_hole circle (at 13.97 ${def_pos}2.54 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP15.str
+                        })
+        (pad 16 thru_hole circle (at 13.97 ${def_pos}0 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP14.str
+                        })
+        (pad 17 thru_hole circle (at 13.97 ${def_neg}2.54 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP13.str
+                        })
+        (pad 18 thru_hole circle (at 13.97 ${def_neg}5.08 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP12.str
+                        })
+						
+						
+        (pad 19 thru_hole circle (at 13.97 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP9.str
+                        })
+        (pad 20 thru_hole circle (at 11.43 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP8.str
+                        })
+        (pad 21 thru_hole circle (at 8.89 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP7.str
+                        })
+        (pad 22 thru_hole circle (at 6.35 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP6.str
+                        })
+        (pad 23 thru_hole circle (at 3.81 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP5.str
+                        })
+        (pad 24 thru_hole circle (at 1.27 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP4.str
+                        })
+        (pad 25 thru_hole circle (at -1.27 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP3.str
+                        })
+        (pad 26 thru_hole circle (at -3.81 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP2.str
+                        })
+        (pad 27 thru_hole circle (at -6.35 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GND.str
+                        })
+        (pad 28 thru_hole circle (at -8.89 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GND.str
+                        })
+        (pad 29 thru_hole circle (at -11.43 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP1.str
+                        })
+        (pad 30 thru_hole circle (at -13.97 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP0.str
+                        })
+        (pad 31 thru_hole circle (at -16.51 ${def_neg}7.62 0) (size 1.7526 1.7526) (drill 1.0922) (layers *.Cu *.SilkS *.Mask) ${
+                            p.GP10.str
+                        })
+      `;
+                    }
+                    if (p.orientation == "down") {
+                        return `
+        ${standard}
+        ${pins("-", "")})
+        `;
+                    } else {
+                        return `
+        ${standard}
+        ${pins("", "-")})
+        `;
+                    }
+                },
+            };
+            return promicro_rp2040;
+        }
+
         var rgb;
         var hasRequiredRgb;
 
@@ -3890,6 +4187,8 @@
                 },
                 params: {
                     class: "HOLE",
+					size: 4.4,
+					drill: 2.2,
                 },
                 body: (p) => `
             (module "MountingHole_2.2mm_M2_Pad_Via" (version 20210722) (generator pcbnew) (layer "F.Cu")
@@ -3905,7 +4204,7 @@
             
               (fp_circle (center 0 0) (end 2.45 0) (layer "F.CrtYd") (width 0.05) (fill none) (tstamp b2688462-c375-45d3-9095-3425fb17c88f))
               (pad "1" thru_hole circle locked (at 1.166726 1.166726) (size 0.7 0.7) (drill 0.4) (layers *.Cu *.Mask) (tstamp 2a7fc905-328f-4bbb-9222-ca8d15d03a86))
-              (pad "1" thru_hole circle locked (at 0 0) (size 4.4 4.4) (drill 2.2) (layers *.Cu *.Mask) (tstamp 47ee1d53-0551-4b6d-bc24-3f3f14c73c36))
+              (pad "1" thru_hole circle locked (at 0 0) (size ${p.size} ${p.size}) (drill ${p.drill}) (layers *.Cu *.Mask) (tstamp 47ee1d53-0551-4b6d-bc24-3f3f14c73c36))
               (pad "1" thru_hole circle locked (at 0 1.65) (size 0.7 0.7) (drill 0.4) (layers *.Cu *.Mask) (tstamp 4eef65bc-4add-40d7-8319-14dcdbae0d44))
               (pad "1" thru_hole circle locked (at 1.166726 -1.166726) (size 0.7 0.7) (drill 0.4) (layers *.Cu *.Mask) (tstamp 56155f4d-2ebc-4ad4-8d82-7aa7846deba8))
               (pad "1" thru_hole circle locked (at -1.65 0) (size 0.7 0.7) (drill 0.4) (layers *.Cu *.Mask) (tstamp 787d6162-1d3c-4def-859e-6532ce27c1ef))
@@ -4021,18 +4320,138 @@
                   `
             }
             return xiao_rp2040;
-            /*
-                (fp_rect (start -4.75 -0.25) (end -2.35 1.25)
-                    (stroke (width 0.05) (type default)) (fill none) (layer "Edge.Cuts") (tstamp 724d0c56-5476-429f-ac61-6c9856d610a8))
-                (fp_rect (start -1.7 -6) (end 1.7 -4.5)
-                    (stroke (width 0.05) (type default)) (fill none) (layer "Edge.Cuts") (tstamp 896c3b8d-9f11-471d-ad6e-be0ffb5264b9))
-                (fp_rect (start 2.35 -0.25) (end 4.75 1.25)
-                    (stroke (width 0.05) (type default)) (fill none) (layer "Edge.Cuts") (tstamp 2d16504a-3eb6-4b73-a511-2febd5a0fc1f))
-                (pad "17" thru_hole circle (at -1.27 -6.032 90) (size 1.397 1.397) (drill 1.016) (property pad_prop_castellated) (layers *.Cu *.Mask) ${p.GND.str})
-                (pad "18" thru_hole circle (at 1.27 -6.032 270) (size 1.397 1.397) (drill 1.016) (property pad_prop_castellated) (layers *.Cu *.Mask) ${p.RST.str})
-                (pad "19" thru_hole circle (at 4.445 -0.317 180) (size 1.397 1.397) (drill 1.016) (property pad_prop_castellated) (layers *.Cu *.Mask) ${p.BATP.str})
-                (pad "19" thru_hole circle (at -4.445 -0.317 180) (size 1.397 1.397) (drill 1.016) (property pad_prop_castellated) (layers *.Cu *.Mask) ${p.BATP.str})
-             */
+        }
+
+        var rp2040_zero;
+        var hasRequiredRp2040_zero;
+
+        function requireRp2040_zero() {
+            if (hasRequiredRp2040_zero) return rp2040_zero;
+            hasRequiredRp2040_zero = 1;
+
+            rp2040_zero = {
+                params: {
+                  designator: 'MCU',
+				  _5V: { type: "net", value: "5V" },
+				  GND: { type: "net", value: "GND" },
+				  _3V3: { type: "net", value: "3V3" },
+				  GP29: { type: "net", value: "GP29" },
+				  GP28: { type: "net", value: "GP28" },
+				  GP27: { type: "net", value: "GP27" },
+				  GP26: { type: "net", value: "GP26" },
+				  GP15: { type: "net", value: "GP15" },
+				  GP14: { type: "net", value: "GP14" },
+				  GP13: { type: "net", value: "GP13" },
+				  GP12: { type: "net", value: "GP12" },
+				  GP11: { type: "net", value: "GP11" },
+				  GP10: { type: "net", value: "GP10" },
+				  GP09: { type: "net", value: "GP09" },
+				  GP08: { type: "net", value: "GP08" },
+				  GP07: { type: "net", value: "GP07" },
+				  GP06: { type: "net", value: "GP06" },
+				  GP05: { type: "net", value: "GP05" },
+				  GP04: { type: "net", value: "GP04" },
+				  GP03: { type: "net", value: "GP03" },
+				  GP02: { type: "net", value: "GP02" },
+				  GP01: { type: "net", value: "GP01" },
+				  GP00: { type: "net", value: "GP00" }
+                },
+				body: p => {
+					const standard = `
+						(module RP2040-Zero (layer F.Cu) (tedit 5B307E4C)
+						${p.at /* parametric position */}
+
+						${"" /* footprint reference */}
+						(fp_text reference "${p.ref}" (at 0 0) (layer F.SilkS) ${
+										p.ref_hide
+									} (effects (font (size 1.27 1.27) (thickness 0.15))))
+						(fp_text value "" (at 0 0) (layer F.SilkS) hide (effects (font (size 1.27 1.27) (thickness 0.15))))
+
+						(fp_line (start -9 -11.75) (end -9 11.75)(stroke (width 0.12) (type solid))(layer "F.SilkS" )(uuid "3a1dbf7b-46ab-4381-b591-554d2769ad07"))
+						(fp_line (start -9 11.75) (end 9 11.75)(stroke (width 0.12) (type solid))(layer "F.SilkS" )(uuid "89d0c3a9-2f98-451a-8c17-8db5c563d887"))
+						(fp_line (start 9 -11.75) (end -9 -11.75)(stroke (width 0.12) (type solid))(layer "F.SilkS" )(uuid "3746518e-ec8f-4326-9e80-93b618a3f818"))
+						(fp_line (start 9 11.75) (end 9 -11.75)(stroke (width 0.12) (type solid))(layer "F.SilkS" )(uuid "d7678225-9962-4b6c-8ac6-79810f77c6a5"))
+						(fp_line (start -9 -11.75) (end 9 -11.75)(stroke (width 0.05) (type solid))(layer "F.CrtYd" )(uuid "04b002c5-b0ed-45ea-8acf-6f312ef24433"))
+						(fp_line (start -9 11.75) (end -9 -11.75)(stroke (width 0.05) (type solid))(layer "F.CrtYd" )(uuid "bde8ecb6-8f54-4c81-a756-d3f5f8297c6e"))
+						(fp_line (start 9 -11.75) (end 9 11.75)(stroke (width 0.05) (type solid))(layer "F.CrtYd" )(uuid "4957628a-0487-4b2e-9e46-2b76a5391512"))
+						(fp_line (start 9 11.75) (end -9 11.75)(stroke (width 0.05) (type solid))(layer "F.CrtYd" )(uuid "5697aad3-3e4a-490a-b02f-474ea55f0389"))
+						(fp_line (start -4.33 -12.75) (end -4.33 -11.75)(stroke (width 0.1) (type solid))(layer "F.Fab" )(uuid "63b68ece-0a85-4af3-bc33-a171573f16ef"))
+						(fp_line (start -4.33 -12.75) (end 4.3 -12.75)(stroke (width 0.1) (type solid))(layer "F.Fab" )(uuid "e0f4b64b-b739-484e-ba8e-428dcc3492f8"))
+						(fp_line (start 4.3 -12.75) (end 4.3 -11.75)(stroke (width 0.1) (type solid))(layer "F.Fab" )(uuid "add39d24-8dd2-4939-b1b3-3e14ce58359e"))
+					`;
+                    function pins(def_neg, def_pos) {
+                        return `
+		(fp_text user "GP0"(at 11.5 ${def_pos}10.16 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP1"(at 11.5 ${def_pos}7.62 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP2"(at 11.5 ${def_pos}5.08 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP3"(at 11.5 ${def_pos}2.54 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP4"(at 11.5 ${def_pos}0 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP5"(at 11.5 ${def_neg}2.54 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP6"(at 11.5 ${def_neg}5.08 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP7"(at 11.5 ${def_neg}7.62 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP8"(at 11.5 ${def_neg}10.16 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+
+		(fp_text user "GP9"(at ${def_neg}5.08 14.25 ${p.rot+90})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP10"(at ${def_neg}2.54 14.25 ${p.rot+90})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP11"(at ${def_neg}0 14.25 ${p.rot+90})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP12"(at ${def_pos}2.54 14.25 ${p.rot+90})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP13"(at ${def_pos}5.08 14.25 ${p.rot+90})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+
+		(fp_text user "GP14"(at -11.5 ${def_neg}10.16 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP15"(at -11.5 ${def_neg}7.62 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP26"(at -11.5 ${def_neg}5.08 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP27"(at -11.5 ${def_neg}2.54 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP28"(at -11.5 ${def_pos}0 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GP29"(at -11.5 ${def_pos}2.54 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "3V3"(at -11.5 ${def_pos}5.08 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "GND"(at -11.5 ${def_pos}7.62 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+		(fp_text user "5V"(at -11.5 ${def_pos}10.16 ${p.rot})(unlocked yes)(layer "F.SilkS" )(uuid "db7aa810-d066-43a8-9b1b-de634406304c")(effects(font(size 0.8 0.8)(thickness 0.15))))
+
+
+		(pad "1" thru_hole roundrect(at 7.62 ${def_pos}10.16 ${p.rot})(size 2.6 1.6)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "08e2d62f-f99a-4268-8b33-617dfcc63e75")${p.GP00.str})
+		(pad "2" thru_hole roundrect(at 7.62 ${def_pos}7.62 ${p.rot})(size 2.6 1.6)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "4d609e7c-74c9-4ae9-a26d-946ff00c167d")${p.GP01.str})
+		(pad "3" thru_hole roundrect(at 7.62 ${def_pos}5.08 ${p.rot})(size 2.6 1.6)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "0867287d-2e6a-4d69-a366-c29f88198f2b")${p.GP02.str})
+		(pad "4" thru_hole roundrect(at 7.62 ${def_pos}2.54 ${p.rot})(size 2.6 1.6)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "2732632c-4768-42b6-bf7f-14643424019e")${p.GP03.str})
+		(pad "5" thru_hole roundrect(at 7.62 ${def_pos}0 ${p.rot})(size 2.6 1.6)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "9ccf03e8-755a-4cd9-96fc-30e1d08fa253")${p.GP04.str})
+		(pad "6" thru_hole roundrect(at 7.62 ${def_neg}2.54 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "30f15357-ce1d-48b9-93dc-7d9b1b2aa048")${p.GP05.str})
+		(pad "7" thru_hole roundrect(at 7.62 ${def_neg}5.08 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "2d210a96-f81f-42a9-8bf4-1b43c11086f3")${p.GP06.str})
+		(pad "8" thru_hole roundrect(at 7.62 ${def_neg}7.62 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "2f215f15-3d52-4c91-93e6-3ea03a95622f")${p.GP07.str})
+		(pad "9" thru_hole roundrect(at 7.62 ${def_neg}10.16 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset 0.6 0))(layers  "*.Cu" "*.Mask")(uuid "0ff508fd-18da-4ab7-9844-3c8a28c2587e")${p.GP08.str})
+		
+		
+		(pad "10" thru_hole roundrect(at ${def_neg}5.08 10.37 )(size 1.6 2.6)(drill 0.8(offset 0 0.6))(layers  "*.Cu" "*.Mask")(uuid "cdfb07af-801b-44ba-8c30-d021a6ad3039")${p.GP09.str})
+		(pad "11" thru_hole roundrect(at ${def_neg}2.54 10.37 )(size 1.5748 2.6)(drill 0.8(offset 0 0.6))(layers  "*.Cu" "*.Mask")(uuid "d0d2eee9-31f6-44fa-8149-ebb4dc2dc0dc")${p.GP10.str})
+		(pad "12" thru_hole roundrect(at ${def_neg}0 10.37 )(size 1.5748 2.6)(drill 0.8(offset 0 0.6))(layers  "*.Cu" "*.Mask")(uuid "d5b800ca-1ab6-4b66-b5f7-2dda5658b504")${p.GP11.str})
+		(pad "13" thru_hole roundrect(at ${def_pos}2.54 10.37 )(size 1.5748 2.6)(drill 0.8(offset 0 0.6))(layers  "*.Cu" "*.Mask")(uuid "eee16674-2d21-45b6-ab5e-d669125df26c")${p.GP12.str})
+		(pad "14" thru_hole roundrect(at ${def_pos}5.08 10.37 )(size 1.5748 2.6)(drill 0.8(offset 0 0.6))(layers  "*.Cu" "*.Mask")(uuid "03c7f780-fc1b-487a-b30d-567d6c09fdc8")${p.GP13.str})
+
+
+		(pad "15" thru_hole roundrect(at -7.62 ${def_neg}10.16 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "00e38d63-5436-49db-81f5-697421f168fc")${p.GP14.str})
+		(pad "16" thru_hole roundrect(at -7.62 ${def_neg}7.62 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "fb30f9bb-6a0b-4d8a-82b0-266eab794bc6")${p.GP15.str})
+		(pad "17" thru_hole roundrect(at -7.62 ${def_neg}5.08 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "9a2d648d-863a-4b7b-80f9-d537185c212b")${p.GP26.str})
+		(pad "18" thru_hole roundrect(at -7.62 ${def_neg}2.54 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "1bdd5841-68b7-42e2-9447-cbdb608d8a08")${p.GP27.str})
+		(pad "19" thru_hole roundrect(at -7.62 ${def_neg}0 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "aa047297-22f8-4de0-a969-0b3451b8e164")${p.GP28.str})
+		(pad "20" thru_hole roundrect(at -7.62 ${def_pos}2.54 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "a76a574b-1cac-43eb-81e6-0e2e278cea39")${p.GP29.str})
+		(pad "21" thru_hole roundrect(at -7.62 ${def_pos}5.08 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "14094ad2-b562-4efa-8c6f-51d7a3134345")${p._3V3.str})
+		(pad "22" thru_hole roundrect(at -7.62 ${def_pos}7.62 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "bd793ae5-cde5-43f6-8def-1f95f35b1be6")${p.GND.str})
+		(pad "23" thru_hole roundrect(at -7.62 ${def_pos}10.16 ${p.rot})(size 2.6 1.6002)(drill 0.8(offset -0.6 0))(layers  "*.Cu" "*.Mask")(uuid "07d160b6-23e1-4aa0-95cb-440482e6fc15")${p._5V.str})
+
+		`;
+		}
+					if (p.orientation == "down") {
+						return `
+						${standard}
+						${pins("-", "")})
+						`;
+					} else {
+						return `
+						${standard}
+						${pins("", "-")})
+						`;
+					}
+				},
+			};
+            return rp2040_zero;
         }
 
         var footprints;
@@ -4054,6 +4473,7 @@
                 omron: requireOmron(),
                 pad: requirePad(),
                 promicro: requirePromicro(),
+                promicro_rp2040: requirePromicro_rp2040(),
                 rgb: requireRgb(),
                 rotary: requireRotary(),
                 scrollwheel: requireScrollwheel(),
@@ -4062,6 +4482,7 @@
                 via: requireVia(),
                 mountinghole: requireMountinghole(),
                 xiao_rp2040: requireXiao_rp2040(),
+                rp2040_zero: requireRp2040_zero(),
             };
             return footprints;
         }
